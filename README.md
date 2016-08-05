@@ -2,9 +2,9 @@
 
 ![](/screenshot.png?raw=true "")
 
-This a proof of concept to display how a duplicate request is created when issuing an AJAX request in the browser to an Express.js server.
+This a proof of concept to display how a duplicate request is created when issuing an AJAX request in the browser to a Node.js HTTP server.
 
-The first request is (purposely) not resolved for 121 seconds. A second request comes into the Express.js server at 120 seconds. The second request is not explicitly invoked by JavaScript and isn't recorded in the Network pane.
+The Node.js HTTP server has a timeout of 3 seconds. The first request fires immediately, and a second request is triggered after 3 seconds. The second request is not explicitly invoked by JavaScript and isn't recorded in the Network pane.
 
 ## Setup
 
@@ -22,8 +22,8 @@ node index.js
 
 Open `http://localhost:3000` in your browser.
 
-The HTML page that loads triggers a single ajax call by calling `$.ajax('http://localhost:3000/some-route')`
+The HTML page that loads triggers a single ajax call by calling `$.ajax('http://localhost:3000/ajax-route')`
 
-Open your DevTools Network pane and you'll see a single AJAX network request. However, after 121 seconds, you'll see in the server log, that a duplicate network request is handled by the Express server. Perhaps this request is issued by the browser?
+Open your DevTools Network pane and you'll see a single AJAX network request that took 6 seconds and failed.
 
-If you issue a request via curl a la <code>curl http://localhost:3000/some-route</code> the request is not duplicated.
+If you issue a request via curl a la <code>curl http://localhost:3000/ajax-route</code> the request is not duplicated.

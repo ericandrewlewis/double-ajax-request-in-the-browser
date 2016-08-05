@@ -1,23 +1,35 @@
 'use strict'
 
-let express = require('express')
-let fs = require('fs')
+let http = require('http');
+let fs = require('fs');
+let path = require('path');
 let PORT = 3000
 
-let app = express()
+let returnIndex = (request, response) => {
+  process.stdout.write('Responding with index.html\n')
+  var filePath = path.join(__dirname, 'index.html');
+  var stat = fs.statSync(filePath);
+  response.writeHead(200, {
+      'Content-Type': 'text/html',
+      'Content-Length': stat.size
+  });
 
-app.get('/', function (request, response) {
-  response.sendFile(__dirname + '/index.html')
-})
+  var readStream = fs.createReadStream(filePath);
+  readStream.pipe(response);
+}
 
-app.get('/some-route', function (request, response) {
-  process.stdout.write('Handling incoming request.\n')
-  let wait = (121 * 1000)
-  setTimeout(() => {
-    process.stdout.write(`Sending 200 HTTP response\n`)
-    response.sendStatus(200)
-   }, wait )
-})
+let returnAJAXEndpoint = (request, response) => {
+  process.stdout.write('Incoming request received for AJAX endpoint.\n')
+}
 
-app.listen(PORT)
-process.stdout.write(`Express running on http://localhost:${PORT}\n`)
+let server = http.createServer(function (request, response) {
+  if (request.url === '/') {
+    returnIndex(request, response)
+  }
+  if (request.url === '/ajax-route') {
+    returnAJAXEndpoint(request, response)
+  }
+}).listen(PORT, '127.0.0.1');
+
+server.timeout = 3000;
+process.stdout.write(`Server running on http://localhost:${PORT}\n`)
