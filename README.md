@@ -1,6 +1,6 @@
-# Ghost AJAX in the browser
+# Duplicate AJAX request in the browser
 
-This a proof of concept to display how a browser may send a "ghost" AJAX request with a Node.js server.
+This a proof of concept to display how a browser may send a duplicate AJAX request in tandem with a Node.js server. The second AJAX request is not explicitly invoked by JavaScript, and isn't recorded in the Network pane.
 
 Install [node.js](http://nodejs.org) and install dependencies
 
