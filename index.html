@@ -6,13 +6,6 @@
     <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Duplicate AJAX request in the browser</h1>
-    <p>This page triggers a single ajax call by calling <code>$.ajax('http://localhost:3000/some-route')</code></p>
-    <p>You can pop open your DevTools and you'll notice a single network request.
-      However, after 121 seconds, you'll see in the server log, that a duplicate
-      network request is handled by the server, perhaps issued by the browser?</p>
-    <p>If you issue a request via curl a la <code>curl http://localhost:3000/some-route</code>
-      the request is not duplicated.</p>
     <script>
     $.ajax('http://localhost:3000/some-route')
     </script>
